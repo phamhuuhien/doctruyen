@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
          */
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        //mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
+        mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         List<String> types = new ArrayList<>();
         types.add("Test1");
         types.add("Test2");
+        types.add("Test3");
+        types.add("Test4");
         TypeAdapter typeAdapter = new TypeAdapter(types);
 
         mRecyclerView.setHasFixedSize(true);
