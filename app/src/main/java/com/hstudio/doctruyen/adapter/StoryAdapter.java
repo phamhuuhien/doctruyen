@@ -1,6 +1,8 @@
 package com.hstudio.doctruyen.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hstudio.doctruyen.R;
+import com.hstudio.doctruyen.object.Story;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -16,18 +20,20 @@ import java.util.List;
  */
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder>{
 
-    private List<String> storyList;
+    private List<Story> mStoryList;
+    private Context mContext;
 
-    public StoryAdapter(List<String> storyList) {
-        this.storyList = storyList;
+    public StoryAdapter(List<Story> storyList, Context context) {
+        mStoryList = storyList;
+        mContext = context;
     }
 
-    public List<String> getStoryList() {
-        return storyList;
+    public List<Story> getStoryList() {
+        return mStoryList;
     }
 
-    public void setStoryList(List<String> storyList) {
-        this.storyList = storyList;
+    public void setStoryList(List<Story> storyList) {
+        this.mStoryList = storyList;
     }
 
     @Override
@@ -39,12 +45,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.title.setText(storyList.get(position));
+        holder.title.setText(mStoryList.get(position).getTitle());
+        if(!TextUtils.isEmpty(mStoryList.get(position).getImage())) {
+            Picasso.with(mContext).load(mStoryList.get(position).getImage()).into(holder.image);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return storyList.size();
+        return mStoryList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

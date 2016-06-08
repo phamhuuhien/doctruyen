@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.hstudio.doctruyen.PrimaryFragment;
+import com.hstudio.doctruyen.object.Story;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,22 +28,27 @@ import java.util.regex.Pattern;
 /**
  * Created by phhien on 6/8/2016.
  */
-public class LoadStories extends AsyncTask<String, Integer, List<String>> {
+public class LoadStories extends AsyncTask<String, Integer, List<Story>> {
 
     private PrimaryFragment mFragment;
     public LoadStories(PrimaryFragment fragment) {
         mFragment = fragment;
     }
     @Override
-    protected List<String> doInBackground(String... urls) {
-        List<String> result = new ArrayList<>();
+    protected List<Story> doInBackground(String... urls) {
+        List<Story> result = new ArrayList<>();
         try {
             Document doc = Jsoup.connect("http://truyenfull.vn/danh-sach/truyen-moi/").get();
             Elements news = doc.select("div[itemtype=\"http://schema.org/Book\"]");
             for(Element element: news) {
+                Story story = new Story();
+                System.out.println(element.toString());
                 Elements a = element.select("a[href]").not("[itemprop=\"genre\"]");
-                //System.out.println(a.get(0).text());
-                result.add(a.get(0).text());
+                Elements img = element.select("img");
+                story.setTitle(a.get(0).text());
+                story.setImage(img.size() > 0 ? img.get(0).attr("src"): "");
+                story.setAuthor("");
+                result.add(story);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,11 +61,11 @@ public class LoadStories extends AsyncTask<String, Integer, List<String>> {
         //setProgressPercent(progress[0]);
     }
 
-    protected void onPostExecute(final List<String> result) {
+    protected void onPostExecute(final List<Story> result) {
         mFragment.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mFragment.setStory(result);
+                mFragment.setStories(result);
             }
         });
     }
