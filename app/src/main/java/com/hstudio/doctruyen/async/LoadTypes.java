@@ -54,7 +54,6 @@ public class LoadTypes extends AsyncTask<String, Integer, List<String>> {
         while(m.find()) {
             String href = m.group(0);
             String text = href.substring(href.indexOf("\">") + 2, href.indexOf("</a>"));
-            System.out.println(text);
             types.add(text);
         }
 

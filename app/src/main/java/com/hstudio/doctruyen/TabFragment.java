@@ -91,9 +91,9 @@ public class TabFragment extends Fragment {
                 case 0 :
                     return "Truyen moi";
                 case 1 :
-                    return "Hoan thanh";
+                    return "Truyen Hot";
                 case 2 :
-                    return "Yeu thich";
+                    return "Hoan thanh";
             }
                 return null;
         }
