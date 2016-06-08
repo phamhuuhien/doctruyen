@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
+import com.hstudio.doctruyen.async.LoadTypes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,33 +24,16 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
     RecyclerView mRecyclerView;
+    TypeAdapter mTypeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         *Setup the DrawerLayout and NavigationView
-         */
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        List<String> types = new ArrayList<>();
-        types.add("Test1");
-        types.add("Test2");
-        types.add("Test3");
-        types.add("Test4");
-        TypeAdapter typeAdapter = new TypeAdapter(types);
-
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(typeAdapter);
-
+        initRecyclerView();
         /**
          * Lets inflate the very first fragment
          * Here , we are inflating the TabFragment as the first Fragment
@@ -95,5 +80,29 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerToggle.syncState();
 
+    }
+
+    public void setTypes(List<String> types) {
+        mTypeAdapter.setTypeList(types);
+        mTypeAdapter.notifyDataSetChanged();
+    }
+
+    private void initRecyclerView() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        List<String> types = new ArrayList<>();
+        types.add("Test1");
+        types.add("Test2");
+        types.add("Test3");
+        types.add("Test4");
+        mTypeAdapter = new TypeAdapter(types);
+        mRecyclerView.setAdapter(mTypeAdapter);
+
+        new LoadTypes(MainActivity.this).execute("http://truyenfull.vn");
     }
 }
