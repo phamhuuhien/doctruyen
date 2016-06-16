@@ -10,7 +10,7 @@ public class StoryDetail {
     private String image;
     private String title;
     private String description;
-    private List<String> chaps;
+    private List<ChapItem> chaps;
 
     public String getImage() {
         return image;
@@ -36,11 +36,11 @@ public class StoryDetail {
         this.description = description;
     }
 
-    public List<String> getChaps() {
+    public List<ChapItem> getChaps() {
         return chaps;
     }
 
-    public void setChaps(List<String> chaps) {
+    public void setChaps(List<ChapItem> chaps) {
         this.chaps = chaps;
     }
 }
