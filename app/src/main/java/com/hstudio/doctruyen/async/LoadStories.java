@@ -42,11 +42,11 @@ public class LoadStories extends AsyncTask<String, Integer, List<Story>> {
             Elements news = doc.select("div[itemtype=\"http://schema.org/Book\"]");
             for(Element element: news) {
                 Story story = new Story();
-                System.out.println(element.toString());
                 Elements a = element.select("a[href]").not("[itemprop=\"genre\"]");
                 Elements img = element.select("img");
                 story.setTitle(a.get(0).text());
                 story.setImage(img.size() > 0 ? img.get(0).attr("src"): "");
+                story.setUrl(a.get(0).attr("href"));
                 story.setAuthor("");
                 result.add(story);
             }

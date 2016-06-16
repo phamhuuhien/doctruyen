@@ -1,8 +1,10 @@
 package com.hstudio.doctruyen.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hstudio.doctruyen.R;
+import com.hstudio.doctruyen.StoryActivity;
 import com.hstudio.doctruyen.object.Story;
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +21,7 @@ import java.util.List;
 /**
  * Created by phhien on 6/8/2016.
  */
-public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder>{
+public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder> {
 
     private List<Story> mStoryList;
     private Context mContext;
@@ -49,6 +52,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         if(!TextUtils.isEmpty(mStoryList.get(position).getImage())) {
             Picasso.with(mContext).load(mStoryList.get(position).getImage()).into(holder.image);
         }
+        holder.link = mStoryList.get(position).getUrl();
     }
 
     @Override
@@ -56,16 +60,26 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         return mStoryList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
         public ImageView image;
         public TextView author;
+        public String link;
 
         public MyViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
             title = (TextView) view.findViewById(R.id.title);
             image = (ImageView) view.findViewById(R.id.image);
             author = (TextView) view.findViewById(R.id.author);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.d("TAG", "onClick " + getPosition() + " " + link);
+            Intent intent = new Intent(mContext, StoryActivity.class);
+            intent.putExtra("LINK", link);
+            mContext.startActivity(intent);
         }
     }
 }
