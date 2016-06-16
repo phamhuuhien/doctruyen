@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hstudio.doctruyen.ChapActivity;
 import com.hstudio.doctruyen.R;
+import com.hstudio.doctruyen.object.ChapItem;
 
 import java.util.List;
 
@@ -19,18 +21,18 @@ import java.util.List;
  */
 public class ChapAdapter extends RecyclerView.Adapter<ChapAdapter.MyViewHolder> {
 
-    private List<String> chaps;
+    private List<ChapItem> chaps;
     private Context mContext;
 
     public ChapAdapter(Context context) {
         mContext = context;
     }
 
-    public List<String> getChaps() {
+    public List<ChapItem> getChaps() {
         return chaps;
     }
 
-    public void setChaps(List<String> chaps) {
+    public void setChaps(List<ChapItem> chaps) {
         this.chaps = chaps;
     }
 
@@ -43,7 +45,8 @@ public class ChapAdapter extends RecyclerView.Adapter<ChapAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(ChapAdapter.MyViewHolder holder, int position) {
-        holder.title.setText(chaps.get(position));
+        holder.title.setText(chaps.get(position).getTitle());
+        holder.link = chaps.get(position).getLink();
     }
 
     @Override
@@ -53,6 +56,7 @@ public class ChapAdapter extends RecyclerView.Adapter<ChapAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
+        public String link;
 
         public MyViewHolder(View view) {
             super(view);
@@ -62,10 +66,10 @@ public class ChapAdapter extends RecyclerView.Adapter<ChapAdapter.MyViewHolder> 
 
         @Override
         public void onClick(View view) {
-            Log.d("TAG", "onClick " + getPosition());
-//            Intent intent = new Intent(mContext, StoryActivity.class);
-//            intent.putExtra("LINK", link);
-//            mContext.startActivity(intent);
+            Log.d("TAG", "onClick " + getPosition() + "link=" + link);
+            Intent intent = new Intent(mContext, ChapActivity.class);
+            intent.putExtra("LINK", link);
+            mContext.startActivity(intent);
         }
     }
 }

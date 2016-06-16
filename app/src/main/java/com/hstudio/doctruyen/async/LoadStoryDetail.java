@@ -3,6 +3,7 @@ package com.hstudio.doctruyen.async;
 import android.os.AsyncTask;
 
 import com.hstudio.doctruyen.StoryActivity;
+import com.hstudio.doctruyen.object.ChapItem;
 import com.hstudio.doctruyen.object.Story;
 import com.hstudio.doctruyen.object.StoryDetail;
 
@@ -39,9 +40,12 @@ public class LoadStoryDetail extends AsyncTask<String, Integer, StoryDetail> {
             Elements desc = doc.select("div.desc-text");
             storyDetail.setDescription(desc.text());
             Elements els = doc.select("ul.list-chapter a[href]");
-            List<String> chaps = new ArrayList<>();
+            List<ChapItem> chaps = new ArrayList<>();
             for(Element e : els) {
-                chaps.add(e.text());
+                ChapItem chapItem = new ChapItem();
+                chapItem.setTitle(e.text());
+                chapItem.setLink(e.attr("href"));
+                chaps.add(chapItem);
             }
             storyDetail.setChaps(chaps);
         } catch (IOException e) {
