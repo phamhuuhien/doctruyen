@@ -3,4 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="news">Truyện Mới</string>
+    <string name="hots">Truyện Hot</string>
+    <string name="full">Truyện Full</string>
 </resources>

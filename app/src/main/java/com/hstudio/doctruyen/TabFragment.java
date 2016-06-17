@@ -89,11 +89,11 @@ public class TabFragment extends Fragment {
 
             switch (position){
                 case 0 :
-                    return "Truyen moi";
+                    return getResources().getString(R.string.news);
                 case 1 :
-                    return "Truyen Hot";
+                    return getResources().getString(R.string.hots);
                 case 2 :
-                    return "Hoan thanh";
+                    return getResources().getString(R.string.full);
             }
                 return null;
         }
