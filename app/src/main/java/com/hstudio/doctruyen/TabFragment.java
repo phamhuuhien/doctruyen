@@ -66,9 +66,9 @@ public class TabFragment extends Fragment {
         public Fragment getItem(int position)
         {
           switch (position){
-              case 0 : return new PrimaryFragment();
-              case 1 : return new SocialFragment();
-              case 2 : return new UpdatesFragment();
+              case 0 : return new NewsFragment().setUrl("http://truyenfull.vn/danh-sach/truyen-moi/");
+              case 1 : return new NewsFragment().setUrl("http://truyenfull.vn/danh-sach/truyen-hot/");
+              case 2 : return new NewsFragment().setUrl("http://truyenfull.vn/danh-sach/truyen-full/");
           }
         return null;
         }
