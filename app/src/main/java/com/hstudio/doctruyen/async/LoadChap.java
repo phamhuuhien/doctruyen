@@ -34,7 +34,10 @@ public class LoadChap extends AsyncTask<String, Integer, Chap> {
             chap.setTitle(els.text());
             Elements data = doc.select("div.chapter-content");
             chap.setData(data.text());
-            System.out.println(els.toString());
+            Elements prev = doc.select("#prev_chap");
+            chap.setPrevious(prev.get(0).attr("href"));
+            Elements next = doc.select("#next_chap");
+            chap.setNext(next.get(0).attr("href"));
         } catch (IOException e) {
             e.printStackTrace();
         }

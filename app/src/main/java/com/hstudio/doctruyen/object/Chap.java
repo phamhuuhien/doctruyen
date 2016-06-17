@@ -7,6 +7,8 @@ public class Chap {
 
     private String title;
     private String data;
+    private String previous;
+    private String next;
 
     public String getTitle() {
         return title;
@@ -22,5 +24,21 @@ public class Chap {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public String getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(String previous) {
+        this.previous = previous;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
     }
 }
