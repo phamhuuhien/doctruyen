@@ -10,10 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 
 import com.hstudio.doctruyen.adapter.TypeAdapter;
 import com.hstudio.doctruyen.async.LoadTypes;
+import com.hstudio.doctruyen.object.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //            @Override
 //            public boolean onNavigationItemSelected(MenuItem menuItem) {
 //                mDrawerLayout.closeDrawers();
-//
+//                System.out.println("click " + menuItem.getItemId());
 //
 ////                if (menuItem.getItemId() == R.id.nav_item_sent) {
 ////                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setTypes(List<String> types) {
+    public void setTypes(List<Type> types) {
         mTypeAdapter.setTypeList(types);
         mTypeAdapter.notifyDataSetChanged();
     }
@@ -95,25 +97,15 @@ public class MainActivity extends AppCompatActivity {
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        List<String> types = new ArrayList<>();
-        types.add("Test1");
-        types.add("Test2");
-        types.add("Test3");
-        types.add("Test4");
-        mTypeAdapter = new TypeAdapter(types);
+        List<Type> types = new ArrayList<>();
+        mTypeAdapter = new TypeAdapter(MainActivity.this);
+        mTypeAdapter.setTypeList(types);
         mRecyclerView.setAdapter(mTypeAdapter);
-        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-        });
 
         new LoadTypes(MainActivity.this).execute("http://truyenfull.vn");
+    }
+
+    public void onTypeClick(Type type) {
+        mDrawerLayout.closeDrawers();
     }
 }

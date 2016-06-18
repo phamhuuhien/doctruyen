@@ -1,12 +1,16 @@
 package com.hstudio.doctruyen.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hstudio.doctruyen.MainActivity;
 import com.hstudio.doctruyen.R;
+import com.hstudio.doctruyen.object.Type;
 
 import java.util.List;
 
@@ -15,26 +19,40 @@ import java.util.List;
  */
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.MyViewHolder> {
 
-    private List<String> typeList;
+    private MainActivity mMainActivity;
+    private List<Type> typeList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public TypeAdapter(MainActivity mainActivity) {
+        mMainActivity = mainActivity;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
+        public String link;
 
         public MyViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
             title = (TextView) view.findViewById(R.id.title);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.d("TAG", "onClick " + getPosition() + " " + link);
+            mMainActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mMainActivity.onTypeClick(typeList.get(getPosition()));
+                }
+            });
         }
     }
 
-    public TypeAdapter(List<String> typeList) {
-        this.typeList = typeList;
-    }
-
-    public List<String> getTypeList() {
+    public List<Type> getTypeList() {
         return typeList;
     }
 
-    public void setTypeList(List<String> typeList) {
+    public void setTypeList(List<Type> typeList) {
         this.typeList = typeList;
     }
 
@@ -47,7 +65,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.title.setText(typeList.get(position));
+        holder.title.setText(typeList.get(position).getTitle());
     }
 
     @Override
