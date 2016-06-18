@@ -49,10 +49,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.title.setText(mStoryList.get(position).getTitle());
+        System.out.println("mStoryList.get(position).getImage()="+mStoryList.get(position).getImage());
         if(!TextUtils.isEmpty(mStoryList.get(position).getImage())) {
             Picasso.with(mContext).load(mStoryList.get(position).getImage()).into(holder.image);
         }
         holder.link = mStoryList.get(position).getUrl();
+        holder.author.setText(mStoryList.get(position).getAuthor());
     }
 
     @Override

@@ -33,11 +33,13 @@ public class LoadStories extends AsyncTask<String, Integer, List<Story>> {
             for(Element element: news) {
                 Story story = new Story();
                 Elements a = element.select("a[href]").not("[itemprop=\"genre\"]");
-                Elements img = element.select("img");
+                Elements img = element.select("div[data-image]");
                 story.setTitle(a.get(0).text());
-                story.setImage(img.size() > 0 ? img.get(0).attr("src"): "");
+                story.setImage(img.attr("data-image"));
                 story.setUrl(a.get(0).attr("href"));
-                story.setAuthor("");
+                Elements text = element.select(".author");
+                System.out.println(text.toString());
+                story.setAuthor(element.select(".author").text());
                 result.add(story);
             }
         } catch (IOException e) {

@@ -2,6 +2,7 @@ package com.hstudio.doctruyen;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,11 +21,23 @@ public class ChapActivity extends AppCompatActivity {
     private TextView data;
     private Button previous, next;
     private Chap mChap;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chap);
 
+        toolbar =  (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         title = (TextView) findViewById(R.id.title);
         data = (TextView) findViewById(R.id.data);
         previous = (Button) findViewById(R.id.previous);
@@ -48,6 +61,7 @@ public class ChapActivity extends AppCompatActivity {
 
     public void setData(Chap chap) {
         mChap = chap;
+        toolbar.setTitle(chap.getTitle());
         title.setText(chap.getTitle());
         data.setText(Html.fromHtml(chap.getData()));
         if("javascript:void(0)".equals(chap.getPrevious())) {

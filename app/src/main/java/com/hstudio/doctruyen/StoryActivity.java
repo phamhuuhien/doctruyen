@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,12 +28,24 @@ public class StoryActivity extends AppCompatActivity {
     private TextView description;
     private ImageView imageView;
     private RecyclerView listChap;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.story_layout);
 
+        toolbar =  (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         title = (TextView) findViewById(R.id.title);
         description = (TextView) findViewById(R.id.description);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -47,6 +61,7 @@ public class StoryActivity extends AppCompatActivity {
     }
 
     public void updateUI(StoryDetail storyDetail) {
+        toolbar.setTitle(storyDetail.getTitle());
         title.setText(storyDetail.getTitle());
         if(!TextUtils.isEmpty(storyDetail.getImage())) {
             Picasso.with(this).load(storyDetail.getImage()).into(imageView);
