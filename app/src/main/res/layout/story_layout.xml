@@ -13,10 +13,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title="Detail" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,10 +43,15 @@
                 android:textSize="@dimen/abc_text_size_subtitle_material_toolbar"
                 android:paddingBottom="5dp"/>
 
-            <TextView
-                android:id="@+id/description"
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
 
         </LinearLayout>
 
@@ -60,7 +61,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="Chap"/>
+        android:textColor="@color/orange"
+        android:paddingTop="10dp"
+        android:text="Chap:"
+        android:gravity="center_horizontal"/>
 
 
     <android.support.v7.widget.RecyclerView
@@ -69,6 +73,5 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
     </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>
