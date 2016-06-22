@@ -1,5 +1,6 @@
 package com.hstudio.doctruyen;
 
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,7 @@ import android.view.MotionEvent;
 import com.hstudio.doctruyen.adapter.TypeAdapter;
 import com.hstudio.doctruyen.async.LoadTypes;
 import com.hstudio.doctruyen.object.Type;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction mFragmentTransaction;
     RecyclerView mRecyclerView;
     TypeAdapter mTypeAdapter;
+    MaterialSearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,33 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
         initRecyclerView();
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Do some magic
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                System.out.println("onSearchViewShown");
+                searchView.setSuggestions(new String[]{"test1", "test2"});
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
         /**
          * Lets inflate the very first fragment
          * Here , we are inflating the TabFragment as the first Fragment
@@ -95,11 +125,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-//        MenuItem searchItem = menu.findItem(R.id.search);
-//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//        searchView.setOnQueryTextListener(this);
-
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 

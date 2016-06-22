@@ -5,10 +5,6 @@ import android.os.AsyncTask;
 import com.hstudio.doctruyen.MainActivity;
 import com.hstudio.doctruyen.object.Type;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -36,33 +32,6 @@ public class LoadTypes extends AsyncTask<String, Integer, List<Type>> {
     @Override
     protected List<Type> doInBackground(String... urls) {
         String url = urls[0];
-//        String html = "";
-//        try {
-//            HttpClient client = new DefaultHttpClient();
-//            HttpGet request = new HttpGet(url);
-//            HttpResponse response = client.execute(request);
-//            InputStream in = response.getEntity().getContent();
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//            StringBuilder str = new StringBuilder();
-//            String line = null;
-//            while ((line = reader.readLine()) != null) {
-//                str.append(line);
-//            }
-//            in.close();
-//            html = str.toString();
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        List<String> types = new ArrayList<>();
-//        Pattern p = Pattern.compile("(?i)<li><a([^>]+)>(.+?)</a></li>");
-//        Matcher m = p.matcher(html);
-//        while(m.find()) {
-//            String href = m.group(0);
-//            String text = href.substring(href.indexOf("\">") + 2, href.indexOf("</a>"));
-//            types.add(text);
-//        }
-
         List<Type> types = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(url).get();
