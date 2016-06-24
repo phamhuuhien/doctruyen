@@ -153,5 +153,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void onTypeClick(Type type) {
         mDrawerLayout.closeDrawers();
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.containerView, new NewsFragment().setUrl(type.getLink())).commit();
     }
 }
