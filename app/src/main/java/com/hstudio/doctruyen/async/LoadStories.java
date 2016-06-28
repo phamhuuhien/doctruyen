@@ -37,8 +37,6 @@ public class LoadStories extends AsyncTask<String, Integer, List<Story>> {
                 story.setTitle(a.get(0).text());
                 story.setImage(img.attr("data-image"));
                 story.setUrl(a.get(0).attr("href"));
-                Elements text = element.select(".author");
-                System.out.println(text.toString());
                 story.setAuthor(element.select(".author").text());
                 result.add(story);
             }

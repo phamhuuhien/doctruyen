@@ -43,7 +43,8 @@ public class LoadStoryDetail extends AsyncTask<String, Integer, StoryDetail> {
             List<ChapItem> chaps = new ArrayList<>();
             for(Element e : els) {
                 ChapItem chapItem = new ChapItem();
-                chapItem.setTitle(e.text());
+                chapItem.setTitle(e.text().trim());
+                System.out.println("e.text()="+e.text());
                 chapItem.setLink(e.attr("href"));
                 chaps.add(chapItem);
             }

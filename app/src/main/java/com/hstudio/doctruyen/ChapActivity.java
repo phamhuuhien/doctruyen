@@ -63,7 +63,6 @@ public class ChapActivity extends AppCompatActivity {
         mChap = chap;
         toolbar.setTitle(chap.getTitle());
         title.setText(chap.getTitle());
-        System.out.println("data=" + chap.getData());
         data.setText(Html.fromHtml(chap.getData()));
         if("javascript:void(0)".equals(chap.getPrevious())) {
             previous.setEnabled(false);
