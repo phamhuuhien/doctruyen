@@ -18,6 +18,12 @@
         </activity>
         <activity android:name=".StoryActivity"/>
         <activity android:name=".ChapActivity"/>
+
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

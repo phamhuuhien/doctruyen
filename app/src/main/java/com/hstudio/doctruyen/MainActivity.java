@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.hstudio.doctruyen.adapter.TypeAdapter;
 import com.hstudio.doctruyen.async.LoadTypes;
 import com.hstudio.doctruyen.object.Type;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     TypeAdapter mTypeAdapter;
     MaterialSearchView searchView;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerToggle.syncState();
 
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
+
     }
 
     @Override
@@ -156,5 +164,29 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new NewsFragment().setUrl(type.getLink())).commit();
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }
