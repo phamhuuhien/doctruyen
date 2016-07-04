@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -68,7 +69,7 @@ public class StoryActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(storyDetail.getImage())) {
             Picasso.with(this).load(storyDetail.getImage()).resize(215, 280).centerCrop().into(imageView);
         }
-        description.setText(storyDetail.getDescription());
+        description.setText(Html.fromHtml(storyDetail.getDescription()));
 
         ChapAdapter chapAdapter = new ChapAdapter(this);
         chapAdapter.setChaps(storyDetail.getChaps());
