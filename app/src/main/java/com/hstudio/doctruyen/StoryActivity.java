@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.hstudio.doctruyen.adapter.ChapAdapter;
 import com.hstudio.doctruyen.async.LoadStoryDetail;
 import com.hstudio.doctruyen.object.StoryDetail;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -25,7 +26,7 @@ import com.squareup.picasso.Picasso;
 public class StoryActivity extends AppCompatActivity {
 
     private TextView title;
-    private TextView description;
+    private ExpandableTextView description;
     private ImageView imageView;
     private RecyclerView listChap;
     private Toolbar toolbar;
@@ -47,10 +48,11 @@ public class StoryActivity extends AppCompatActivity {
             }
         });
         title = (TextView) findViewById(R.id.title);
-        description = (TextView) findViewById(R.id.description);
+        description = (ExpandableTextView) findViewById(R.id.description);
         imageView = (ImageView) findViewById(R.id.imageView);
         listChap = (RecyclerView) findViewById(R.id.listChap);
         listChap.setHasFixedSize(true);
+        listChap.setNestedScrollingEnabled(false);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         listChap.setLayoutManager(mLayoutManager);
         listChap.setItemAnimator(new DefaultItemAnimator());
