@@ -22,6 +22,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.hstudio.doctruyen.adapter.TypeAdapter;
 import com.hstudio.doctruyen.async.LoadTypes;
+import com.hstudio.doctruyen.async.Search;
+import com.hstudio.doctruyen.object.Story;
 import com.hstudio.doctruyen.object.Type;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TypeAdapter mTypeAdapter;
     MaterialSearchView searchView;
     private AdView mAdView;
+    CustomSearchAdapter customSearchAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                //new Search(MainActivity.this).execute("http://truyenfull.vn/ajax.php", newText);
+                return true;
             }
         });
 
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                System.out.println("onSearchViewShown");
-                searchView.setSuggestions(new String[]{"test1", "test2"});
+                searchView.setSuggestions(new String[]{"test1, test2"});
             }
 
             @Override
@@ -81,31 +84,6 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new TabFragment()).commit();
-        /**
-         * Setup click events on the Navigation View Items.
-         */
-
-//        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                mDrawerLayout.closeDrawers();
-//                System.out.println("click " + menuItem.getItemId());
-//
-////                if (menuItem.getItemId() == R.id.nav_item_sent) {
-////                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-////                    fragmentTransaction.replace(R.id.containerView, new SentFragment()).commit();
-////
-////                }
-////
-////                if (menuItem.getItemId() == R.id.nav_item_inbox) {
-////                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-////                    xfragmentTransaction.replace(R.id.containerView, new TabFragment()).commit();
-////                }
-//
-//                return false;
-//            }
-//
-//        });
 
         /**
          * Setup Drawer Toggle of the Toolbar
@@ -120,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 R.string.app_name);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        customSearchAdapter = new CustomSearchAdapter(MainActivity.this, new String[0]);
+        //searchView.setAdapter(customSearchAdapter);
 
         mDrawerToggle.syncState();
 
@@ -164,6 +144,18 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new NewsFragment().setUrl(type.getLink())).commit();
+    }
+
+    public void setSuggestions(List<Story> stories) {
+        ArrayList<String> test = new ArrayList<>();
+        for(Story story : stories) {
+            test.add(story.getTitle());
+        }
+        String[] a = new String[stories.size()];
+        a = test.toArray(a);
+        customSearchAdapter.setData(test);
+        customSearchAdapter.notifyDataSetChanged();
+        searchView.showSuggestions();
     }
 
     @Override
