@@ -40,6 +40,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder
         this.mStoryList = storyList;
     }
 
+    public void addStoryList(List<Story> stories) {
+        this.mStoryList.addAll(stories);
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
