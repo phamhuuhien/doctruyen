@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.hstudio.doctruyen.adapter.CustomSearchAdapter;
 import com.hstudio.doctruyen.adapter.TypeAdapter;
 import com.hstudio.doctruyen.async.LoadTypes;
 import com.hstudio.doctruyen.async.Search;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //new Search(MainActivity.this).execute("http://truyenfull.vn/ajax.php", newText);
+                new Search(MainActivity.this).execute("http://truyenfull.vn/ajax.php", newText);
                 return true;
             }
         });

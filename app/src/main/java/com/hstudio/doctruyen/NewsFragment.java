@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.hstudio.doctruyen.adapter.StoryAdapter;
 import com.hstudio.doctruyen.async.LoadStories;
 import com.hstudio.doctruyen.object.Story;
+import com.hstudio.doctruyen.utils.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class NewsFragment extends Fragment {
     private StoryAdapter mStoryAdapter;
     private SwipeRefreshLayout mSwipeContainer;
     private String mUrl;
+    private int page = 1;
 
     public Fragment setUrl(String url) {
         mUrl = url;
@@ -58,7 +60,7 @@ public class NewsFragment extends Fragment {
     private void initRecyclerView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -80,10 +82,20 @@ public class NewsFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLayoutManager) {
+
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                page ++;
+                mSwipeContainer.setRefreshing(true);
+                new LoadStories(NewsFragment.this).execute(mUrl + "trang-" + page);
+            }
+        });
+
     }
 
     public void setStories(List<Story> stories) {
-        mStoryAdapter.setStoryList(stories);
+        mStoryAdapter.addStoryList(stories);
         mStoryAdapter.notifyDataSetChanged();
         mSwipeContainer.setRefreshing(false);
     }

@@ -31,7 +31,7 @@ public class LoadChap extends AsyncTask<String, Integer, Chap> {
         try {
             Document doc = Jsoup.connect(url).get();
             chap.setTitle(doc.title().split("-")[1]);
-            Elements data = doc.select("div.chapter-content");
+            Elements data = doc.select("div.chapter-content-rb");
             chap.setData(data.toString());
             Elements prev = doc.select("#prev_chap");
             chap.setPrevious(prev.get(0).attr("href"));
