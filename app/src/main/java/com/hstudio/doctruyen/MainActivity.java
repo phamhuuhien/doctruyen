@@ -1,6 +1,7 @@
 package com.hstudio.doctruyen;
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     TypeAdapter mTypeAdapter;
     MaterialSearchView searchView;
     private AdView mAdView;
-    CustomSearchAdapter customSearchAdapter;
+    private List<Story> suggestionStories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Do some magic
+                String text = searchView.getSearchText();
+                for(Story story : suggestionStories) {
+                    if(story.getTitle().equals(text)) {
+                        Intent intent = new Intent(MainActivity.this, StoryActivity.class);
+                        intent.putExtra("LINK", story.getUrl());
+                        MainActivity.this.startActivity(intent);
+                    }
+                }
                 return false;
             }
 
@@ -69,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                searchView.setSuggestions(new String[]{"test1, test2"});
+                searchView.setSuggestions(new String[]{""});
             }
 
             @Override
@@ -99,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 R.string.app_name);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        customSearchAdapter = new CustomSearchAdapter(MainActivity.this, new String[0]);
-        //searchView.setAdapter(customSearchAdapter);
-
         mDrawerToggle.syncState();
 
         mAdView = (AdView) findViewById(R.id.adView);
@@ -129,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         List<Type> types = new ArrayList<>();
@@ -148,15 +152,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setSuggestions(List<Story> stories) {
+        suggestionStories = stories;
         ArrayList<String> test = new ArrayList<>();
         for(Story story : stories) {
             test.add(story.getTitle());
         }
         String[] a = new String[stories.size()];
-        a = test.toArray(a);
-        customSearchAdapter.setData(test);
-        customSearchAdapter.notifyDataSetChanged();
-        searchView.showSuggestions();
+        test.toArray(a);
+        searchView.updateSuggesstions(a);
     }
 
     @Override

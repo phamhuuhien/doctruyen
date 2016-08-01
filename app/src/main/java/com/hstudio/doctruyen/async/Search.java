@@ -49,10 +49,11 @@ public class Search extends AsyncTask<String, Integer, List<Story>> {
             String[] data = response.body().string().split("</a>");
             for(String e : data) {
                 Story story = new Story();
-                story.setTitle(e.substring(e.lastIndexOf(">")));
-                story.setUrl(e.substring(e.indexOf("\""), e.indexOf("class") - 2));
+                story.setTitle(e.substring(e.lastIndexOf(">") + 1));
+                story.setUrl(e.substring(e.indexOf("\"") + 1, e.indexOf("class") - 2));
                 stories.add(story);
             }
+            stories.remove(stories.size() - 1);
         } catch (IOException e) {
             e.printStackTrace();
         }

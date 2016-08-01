@@ -102,7 +102,6 @@ public class StoryActivity extends AppCompatActivity {
             Picasso.with(this).load(storyDetail.getImage()).resize(215, 280).centerCrop().into(imageView);
         }
         description.setText(Html.fromHtml(storyDetail.getDescription()));
-        System.out.println("chaps = " + storyDetail.getChaps().size());
         if(storyDetail.getChaps().size() < 50) {
             isStop = true;
         }
