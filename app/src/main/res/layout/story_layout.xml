@@ -13,7 +13,8 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title="Detail" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.hstudio.doctruyen.utils.InteractiveScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true"
@@ -91,8 +92,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listChap"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
-    </ScrollView>
+    </com.hstudio.doctruyen.utils.InteractiveScrollView>
 
 </LinearLayout>

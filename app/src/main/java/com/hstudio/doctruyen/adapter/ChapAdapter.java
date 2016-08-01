@@ -24,16 +24,17 @@ public class ChapAdapter extends RecyclerView.Adapter<ChapAdapter.MyViewHolder> 
     private List<ChapItem> chaps;
     private Context mContext;
 
-    public ChapAdapter(Context context) {
+    public ChapAdapter(Context context, List<ChapItem> chaps) {
         mContext = context;
+        this.chaps = chaps;
     }
 
     public List<ChapItem> getChaps() {
         return chaps;
     }
 
-    public void setChaps(List<ChapItem> chaps) {
-        this.chaps = chaps;
+    public void addChaps(List<ChapItem> chaps) {
+        this.chaps.addAll(chaps);
     }
 
     @Override

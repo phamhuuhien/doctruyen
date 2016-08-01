@@ -87,7 +87,6 @@ public class NewsFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 page ++;
-                mSwipeContainer.setRefreshing(true);
                 new LoadStories(NewsFragment.this).execute(mUrl + "trang-" + page);
             }
         });
