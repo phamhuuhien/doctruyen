@@ -70,7 +70,7 @@ public class ChapActivity extends AppCompatActivity {
             previous.setEnabled(true);
         }
 
-        if("chap.getPrevious()".equals(chap.getNext())) {
+        if("javascript:void(0)".equals(chap.getNext())) {
             next.setEnabled(false);
         } else {
             next.setEnabled(true);

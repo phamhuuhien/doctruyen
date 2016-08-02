@@ -99,7 +99,7 @@ public class StoryActivity extends AppCompatActivity {
         toolbar.setTitle(storyDetail.getTitle());
         title.setText(storyDetail.getTitle());
         if(!TextUtils.isEmpty(storyDetail.getImage())) {
-            Picasso.with(this).load(storyDetail.getImage()).resize(215, 280).centerCrop().into(imageView);
+            Picasso.with(this).load(storyDetail.getImage()).resize(215, 215).centerCrop().into(imageView);
         }
         description.setText(Html.fromHtml(storyDetail.getDescription()));
         if(storyDetail.getChaps().size() < 50) {

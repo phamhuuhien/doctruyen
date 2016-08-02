@@ -38,7 +38,7 @@ public class LoadStoryDetail extends AsyncTask<String, Integer, StoryDetail> {
             Elements title = doc.select("h3.title");
             storyDetail.setTitle(title.text());
             Elements desc = doc.select("div.desc-text");
-            storyDetail.setDescription(desc.text());
+            storyDetail.setDescription(desc.toString());
             Elements els = doc.select("ul.list-chapter a[href]");
             List<ChapItem> chaps = new ArrayList<>();
             for(Element e : els) {
