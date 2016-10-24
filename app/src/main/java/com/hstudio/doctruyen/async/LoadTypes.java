@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 
 import com.hstudio.doctruyen.MainActivity;
 import com.hstudio.doctruyen.object.Type;
+import com.hstudio.doctruyen.utils.ConfigHelper;
 
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -32,17 +34,18 @@ public class LoadTypes extends AsyncTask<String, Integer, List<Type>> {
     @Override
     protected List<Type> doInBackground(String... urls) {
         String url = urls[0];
+        JSONObject config = ConfigHelper.getJsonObject(mMainActivity);
         List<Type> types = new ArrayList<>();
         try {
             Document doc = Jsoup.connect(url).get();
-            Elements li = doc.select("ul.dropdown-menu li a");
+            Elements li = doc.select(config.getString("type"));
             for(Element e : li) {
                 Type type = new Type();
                 type.setTitle(e.text());
                 type.setLink(e.attr("href"));
                 types.add(type);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
